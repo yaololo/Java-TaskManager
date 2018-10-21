@@ -1,6 +1,6 @@
-package TaskManager.TaskList.Tasks;
+package  TaskManager.TaskList.Tasks;
 
-public class Task {
+public abstract class Task {
     private String description;
     private Boolean status;
 
@@ -17,9 +17,7 @@ public class Task {
         return description;
     }
 
-    public String getDetails(){
-        return getDescription() + "\n\tIt done? " + (getStatus()? "Yes" : "No");
-    }
+    public abstract String getDetails();
 
     public void setStatus(boolean status){
         this.status = status;
