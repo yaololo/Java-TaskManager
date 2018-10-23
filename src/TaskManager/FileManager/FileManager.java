@@ -1,29 +1,33 @@
+package TaskManager.Storage;
+import TaskManager.TaskList.Tasks.Deadline;
+import TaskManager.TaskList.Tasks.Task;
+import TaskManager.TaskList.Tasks.Todo;
 import utils.Message;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Scanner;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
-public class FileOperation {
+public class Storage {
     private List<Task> taskList;
     private File file;
 
-    public FileOperation(String path){
+    public Storage(String path){
         file = new File(path);
     }
 
     public List<Task> loadedTasks(){
         taskList = new ArrayList<>();
-            List<String> lines = getLines(this.file);
-            for (String line : lines) {
-                // ignore empty lines
-                if (line.trim().isEmpty()) continue;
-                taskList.add(createTask(line)); //convert the line to a task and add to the list
-            }
+        List<String> lines = getLines(this.file);
+        for (String line : lines) {
+            // ignore empty lines
+            if (line.trim().isEmpty()) continue;
+            taskList.add(createTask(line)); //convert the line to a task and add to the list
+        }
         return taskList;
     }
 
@@ -52,7 +56,7 @@ public class FileOperation {
     private Task createTask(String input){
         boolean status = false;
         String taskDetails = input.split("\\|")[2].trim();
-        Task task = new Task(taskDetails);
+        Task task = new Todo(taskDetails);
         task.setStatus(status);
 
         if(Integer.parseInt(input.split("\\|")[1].trim()) == 1){
@@ -65,6 +69,7 @@ public class FileOperation {
             task = new Deadline(taskDetails, deadline);
         }
 
+
         return task;
     }
 
@@ -75,7 +80,7 @@ public class FileOperation {
             Scanner input = new Scanner(file);
 
             while(input.hasNext()){
-            String line = input.nextLine();
+                String line = input.nextLine();
                 tasks.add(line);
             }
 
