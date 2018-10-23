@@ -6,4 +6,4 @@ Deadline | 0 | feed my dog | today 6pm
 Todo | 0 | meet client
 Deadline | 0 | buy food | Friday evening
 Todo | 0 | submit homework
-Deadline | 1 | buy milk | tomorrow eveing
+Deadline | 0 | buy milk | tomorrow eveing
