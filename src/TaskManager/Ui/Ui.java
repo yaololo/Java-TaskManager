@@ -1,14 +1,22 @@
-package TaskManager.Ui;
+package taskManager.ui;
 import java.util.List;
 import java.util.Scanner;
-import TaskManager.TaskList.Tasks.Task;
+import taskManager.taskList.Tasks.Task;
 
 public class Ui {
 
     private Scanner in;
+    private static String commands = "--print  \tto print all tasks\n" +
+                                    "--todo descriptions \tto create a new todo task with keywords todo, e.g. ‘todo attend an online course\n" +
+                                    "--deadline description / deadline \tto create a new deadline task with deadline as keyword. e.g deadline buy milk / Friday evening\n" +
+                                    "--done task number’ \tto mark which deadline tasks as done with keyword done e.g ‘done 3’\n";
 
     public Ui() {
         in = new Scanner(System.in);
+        commands = "--print  \tto print all tasks\n" +
+                "--todo descriptions \tto create a new todo task with keywords todo, e.g. ‘todo attend an online course\n" +
+                "--deadline description / deadline \tto create a new deadline task with deadline as keyword. e.g deadline buy milk / Friday evening\n" +
+                "--done task number’ \tto mark which deadline tasks as done with keyword done e.g ‘done 3’\n";
     }
 
     public String readUserCommand() {
@@ -17,7 +25,7 @@ public class Ui {
     }
 
     public static void printWelcome(){
-        System.out.println("Welcome to TaskManager!\n");
+        System.out.println("Welcome to taskManager!\n");
     }
 
     public static void printNumberOfTasks(int count){
@@ -43,4 +51,7 @@ public class Ui {
         }
     }
 
+    public static void printCommands(){
+        System.out.println(commands);
+    }
 }
