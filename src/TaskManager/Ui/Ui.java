@@ -13,10 +13,6 @@ public class Ui {
 
     public Ui() {
         in = new Scanner(System.in);
-        commands = "--print  \tto print all tasks\n" +
-                "--todo descriptions \tto create a new todo task with keywords todo, e.g. ‘todo attend an online course\n" +
-                "--deadline description / deadline \tto create a new deadline task with deadline as keyword. e.g deadline buy milk / Friday evening\n" +
-                "--done task number’ \tto mark which deadline tasks as done with keyword done e.g ‘done 3’\n";
     }
 
     public String readUserCommand() {
