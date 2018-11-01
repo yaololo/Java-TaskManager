@@ -1,4 +1,4 @@
-package TaskManager.Parser;
+package taskManager.parser;
 
 public class Parser {
 
