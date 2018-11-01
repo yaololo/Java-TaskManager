@@ -21,27 +21,33 @@ public class TaskList {
             throw new InvalidInputException(e.getMessage());
 
         }
-        // if(new InputValidator().validateTodo(line)){
-        //     this.tasks.add(new Todo(line.substring("todo".length()).trim()));
-        // }else {
-        //     throw new TaskManagerException("Empty description for TODO");
-        // }
     }
 
-    public void addDeadline(String line) throws TaskManagerException {
-        if (!line.contains("/") || line.substring(line.indexOf("/")+1).trim().isEmpty()){
-            throw new TaskManagerException("Empty deadline for Deadline task");
-        }
+    public void addDeadline(String line) throws InvalidInputException {
+        try {
+            new InputValidator().validateDeadline(line);
 
-        String task = line.substring("deadline".length(), line.indexOf('/')).trim();
+            //
+            String task = line.substring("deadline".length(), line.indexOf('/')).trim();
+            String deadline = line.substring(line.indexOf('/')+ 1);
 
-        if (task.isEmpty()){
-            throw new TaskManagerException("Empty description for TODO");
+            tasks.add(new Deadline(task, deadline));
+        } catch (InvalidInputException e){
+            throw new InvalidInputException(e.getMessage());
         }
+//        if (!line.contains("/") || line.substring(line.indexOf("/")+1).trim().isEmpty()){
+//            throw new TaskManagerException("Empty deadline for Deadline task");
+//        }
+//
+//        String task = line.substring("deadline".length(), line.indexOf('/')).trim();
+//
+//        if (task.isEmpty()){
+//            throw new TaskManagerException("Empty description for TODO");
+//        }
 
         String deadline = line.substring(line.indexOf('/')+ 1);
 
-        tasks.add(new Deadline(task, deadline));
+//        tasks.add(new Deadline(task, deadline));
     }
 
     public void markAsDone(String line){
