@@ -18,14 +18,6 @@ public class InputValidator {
 
     private String input;
 
-
-//    public InputEvaluator(String inputData){
-//
-//    }
-//
-//
-//
-
     public static void validateTodo(String todoTask) throws InvalidInputException{
         String description = todoTask.substring("todo".length()).trim();
         if (description.isEmpty()){
@@ -34,25 +26,23 @@ public class InputValidator {
     }
 
     public static void validateDeadline(String deadlineTask) throws InvalidInputException{
-        String task = deadlineTask.substring("deadline".length(), deadlineTask.indexOf('/')).trim();
-        if (task.isEmpty()){
-            throw new InvalidInputException("Empty description for deadline task");
-        }
 
         String dateOfDeadline = deadlineTask.substring(deadlineTask.indexOf("/")+1).trim();
         if (!deadlineTask.contains("/") || dateOfDeadline.isEmpty()){
             throw new InvalidInputException("Empty deadline for Deadline task");
         }
 
+        String task = deadlineTask.substring("deadline".length(), deadlineTask.indexOf('/')).trim();
+        if (task.isEmpty()){
+            throw new InvalidInputException("Empty description for deadline task");
+        }
 
         if(!validateDateOfDeadline(dateOfDeadline)){
             throw new InvalidInputException("Invalid date format");
         }
-
     }
 
-
-    private static boolean validateDateOfDeadline(String inputDate) throws InvalidInputException{
+    private static boolean validateDateOfDeadline(String inputDate){
         SimpleDateFormat dataFormatValidator = new SimpleDateFormat("yyyy-MM-dd");
 
         // @setLenient(false) is enforcing input to strictly match pattern e.g 2008-10-20 is valid, 2008/10/20 is invalid
@@ -61,10 +51,8 @@ public class InputValidator {
             //if not valid, it will throw ParseException
             dataFormatValidator.parse(inputDate);
         } catch (ParseException e) {
-
             return false;
         }
-
         return true;
 
     }
