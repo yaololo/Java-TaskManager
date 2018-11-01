@@ -1,7 +1,8 @@
-package TaskManager.TaskList.Tasks;
+package taskManager.taskList.Tasks;
 
 public class Deadline extends Task {
     private String deadline;
+    private String dueDate;
 
     public Deadline(String task, String deadline){
         super(task);
@@ -17,8 +18,15 @@ public class Deadline extends Task {
         return deadline;
     }
 
-
     public String getDetails(){
         return getDescription() + "\n\tIt done? " + (getStatus()? "Yes" : "No") + "\n\t" + getDeadline();
+    }
+
+    public void setDueDate() {
+        this.dueDate = dueDate;
+    }
+
+    public String getDueDate(){
+        return dueDate;
     }
 }
