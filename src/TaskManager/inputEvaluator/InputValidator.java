@@ -1,4 +1,6 @@
 package taskManager.inputEvaluator;
+import taskManager.parser.Parser;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +21,7 @@ public class InputValidator {
     private String input;
 
     public static void validateTodo(String todoTask) throws InvalidInputException{
-        String description = todoTask.substring("todo".length()).trim();
+        String description = new Parser().getTaskDescription(todoTask);
         if (description.isEmpty()){
             throw new InvalidInputException("Empty description for TODO");
         }
@@ -27,18 +29,22 @@ public class InputValidator {
 
     public static void validateDeadline(String deadlineTask) throws InvalidInputException{
 
-        String dateOfDeadline = deadlineTask.substring(deadlineTask.indexOf("/")+1).trim();
-        if (!deadlineTask.contains("/") || dateOfDeadline.isEmpty()){
-            throw new InvalidInputException("Empty deadline for Deadline task");
+        if (!deadlineTask.contains("/")){
+            throw new InvalidInputException("Missing '/' to indicate deadline");
         }
 
-        String task = deadlineTask.substring("deadline".length(), deadlineTask.indexOf('/')).trim();
-        if (task.isEmpty()){
-            throw new InvalidInputException("Empty description for deadline task");
+        String dateOfDeadline = new Parser().getTaskDeadline(deadlineTask);
+        if(dateOfDeadline.isEmpty()){
+            throw new InvalidInputException("Empty deadline for Deadline task");
         }
 
         if(!validateDateOfDeadline(dateOfDeadline)){
             throw new InvalidInputException("Invalid date format");
+        }
+
+        String taskDescription = new Parser().getTaskDescription(deadlineTask);
+        if (taskDescription.isEmpty()){
+            throw new InvalidInputException("Empty description for deadline task");
         }
     }
 
