@@ -1,37 +1,31 @@
-package TaskManager.TaskList;
-import TaskManager.Parser.Parser;
-import TaskManager.TaskList.Tasks.*;
+package taskManager.taskList;
+import taskManager.inputEvaluator.InputValidator;
+import taskManager.inputEvaluator.InvalidInputException;
+import taskManager.taskList.Tasks.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
     private List<Task> tasks;
 
-//    public TaskList(List<Task> tasksList){
-//        tasks = tasksList;
-//    }
-//
     public TaskList(){
         tasks = new ArrayList<>();
     }
 
-//    public List<Task> createTaskList(){
-//        return tasks;
-//    }
+    public void addTodo(String line)throws InvalidInputException {
+        try {
+            new InputValidator().validateTodo(line);
+            tasks.add(new Todo(line.substring("todo".length()).trim()));
 
-//    public void printTasks(){
-//        System.out.println("Tasks:");
-//        for (int i = 0; i < tasks.size(); i++) {
-//            System.out.println("[" + (i + 1) + "] " + tasks.get(i).getDetails().trim());
-//        }
-//    }
+        } catch (InvalidInputException e) {
+            throw new InvalidInputException(e.getMessage());
 
-    public void addTodo(String line)throws TaskManagerException {
-        String description = line.substring("todo".length()).trim();
-        if (description.isEmpty()){
-            throw new TaskManagerException("Empty description for TODO");
         }
-        this.tasks.add(new Todo(line.substring("todo".length()).trim()));
+        // if(new InputValidator().validateTodo(line)){
+        //     this.tasks.add(new Todo(line.substring("todo".length()).trim()));
+        // }else {
+        //     throw new TaskManagerException("Empty description for TODO");
+        // }
     }
 
     public void addDeadline(String line) throws TaskManagerException {
