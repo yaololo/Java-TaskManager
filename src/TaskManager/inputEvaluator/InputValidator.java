@@ -26,38 +26,47 @@ public class InputValidator {
 //
 //
 
-    public static boolean validateTodo(String todoTask){
+    public static void validateTodo(String todoTask) throws InvalidInputException{
         String description = todoTask.substring("todo".length()).trim();
         if (description.isEmpty()){
-            return false;
+            throw new InvalidInputException("Empty description for TODO");
         }
-        return true;
+    }
+
+    public static void validateDeadline(String deadlineTask) throws InvalidInputException{
+        String task = deadlineTask.substring("deadline".length(), deadlineTask.indexOf('/')).trim();
+        if (task.isEmpty()){
+            throw new InvalidInputException("Empty description for deadline task");
+        }
+
+        String dateOfDeadline = deadlineTask.substring(deadlineTask.indexOf("/")+1).trim();
+        if (!deadlineTask.contains("/") || dateOfDeadline.isEmpty()){
+            throw new InvalidInputException("Empty deadline for Deadline task");
+        }
+
+
+        if(!validateDateOfDeadline(dateOfDeadline)){
+            throw new InvalidInputException("Invalid date format");
+        }
+
     }
 
 
-    public static void deadlineDateEvluation(String inputDate){
-        if(inputDate == null){
-            System.out.println("invalid input");
-            return;
-        }
-
-        inputDate = inputDate.substring("date".length()).trim();
+    private static boolean validateDateOfDeadline(String inputDate) throws InvalidInputException{
         SimpleDateFormat dataFormatValidator = new SimpleDateFormat("yyyy-MM-dd");
+
+        // @setLenient(false) is enforcing input to strictly match pattern e.g 2008-10-20 is valid, 2008/10/20 is invalid
         dataFormatValidator.setLenient(false);
-
         try {
-
             //if not valid, it will throw ParseException
-            Date date = dataFormatValidator.parse(inputDate);
-            System.out.println(dataFormatValidator.format(date));
-
+            dataFormatValidator.parse(inputDate);
         } catch (ParseException e) {
 
-//            e.printStackTrace();
-            System.out.println("\n" + ANSI_YELLOW+ "Warning: Wrong date format" + ANSI_RESET + "\n");
+            return false;
         }
 
-//        return true;
+        return true;
+
     }
 
 }
