@@ -1,16 +1,21 @@
-package  TaskManager.TaskList.Tasks;
+package  taskManager.taskList.Tasks;
+        import java.text.SimpleDateFormat;
+        import java.util.Date;
 
 public abstract class Task {
     private String description;
     private Boolean status;
+    private String createDate;
 
     public Task(String task){
         addTask(task);
         status = false;
+        createDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date());
     }
 
     public void addTask(String task){
         description = task;
+
     }
 
     public String getDescription(){
@@ -25,5 +30,9 @@ public abstract class Task {
 
     public boolean getStatus() {
         return this.status;
+    }
+
+    public String getCreateDate(){
+        return createDate;
     }
 }
