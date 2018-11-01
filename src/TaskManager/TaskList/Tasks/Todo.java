@@ -1,4 +1,4 @@
-package TaskManager.TaskList.Tasks;
+package taskManager.taskList.Tasks;
 
 public class Todo extends Task {
 

@@ -1,9 +1,9 @@
-package TaskManager.FileManager;
-import TaskManager.TaskList.TaskList;
-import TaskManager.TaskList.TaskManagerException;
-import TaskManager.TaskList.Tasks.Task;
-import TaskManager.Ui.Ui;
-import TaskManager.Parser.Parser;
+package taskManager.fileManager;
+import taskManager.taskList.TaskList;
+import taskManager.taskList.TaskManagerException;
+import taskManager.taskList.Tasks.Task;
+import taskManager.ui.Ui;
+import taskManager.parser.Parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
