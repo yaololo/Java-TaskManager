@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TaskList {
     private List<Task> tasks;
-    private List<Deadline> reminderList;
+    private List<Task> reminderList;
     private int idCounter;
 
     public TaskList(){
@@ -34,12 +34,12 @@ public class TaskList {
 
             String taskDescription = Parser.getTaskDescriptionFromUserInput(input);
             String deadline = Parser.getTaskDeadline(input);
-            Deadline temp = new Deadline(taskDescription, deadline, idCounter);
-            tasks.add(temp);
+            Deadline buffer = new Deadline(taskDescription, deadline, idCounter);
+            tasks.add(buffer);
             idCounter++;
 
-            if(temp.getReminderStatus()){
-//                reminderList.add(tasks.get(tasks.size()-1));
+            if(buffer.getReminderStatus()){
+                reminderList.add(tasks.get(tasks.size()-1));
             }
 
         } catch (InvalidInputException e){
@@ -61,15 +61,26 @@ public class TaskList {
     public void updateReminderTime(String userInput){
         int index = Integer.parseInt(userInput.substring("/".length()).trim());
         int newReminderTime = Integer.parseInt(userInput.substring("reminder".length(), index).trim());
+
         Deadline buffer = (Deadline)tasks.get(index - 1);
         buffer.setTimeToRemindInMin(newReminderTime);
+
+        if(buffer.getReminderStatus()){
+            if(!reminderList.contains(tasks.get(index - 1))){
+                reminderList.add(tasks.get(index - 1));
+            }
+        } else {
+            if (reminderList.contains(tasks.get(index - 1))) {
+                reminderList.remove(tasks.get(index - 1));
+            }
+        }
     }
 
     public int getTotalNumberOfTask(){ return tasks.size(); }
 
     public List<Task> getTaskList(){ return tasks; }
 
-    public List<Deadline> getReminderList(){ return reminderList;}
+    public List<Task> getReminderList(){ return reminderList;}
 
     public int getTotalNumberOfReminderTasks(){ return reminderList.size(); }
 
