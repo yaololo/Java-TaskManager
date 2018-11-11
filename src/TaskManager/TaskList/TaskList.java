@@ -19,7 +19,7 @@ public class TaskList {
 
     public void addTodo(String input)throws InvalidInputException {
         try {
-            new InputValidator().validateTodo(input);
+            InputValidator.validateTodo(input);
             tasks.add(new Todo(input.substring("todo".length()).trim(), idCounter));
             idCounter++;
 
@@ -32,8 +32,8 @@ public class TaskList {
         try {
             InputValidator.validateDeadline(input);
 
-            String taskDescription = Parser.getTaskDescription(input);
-            String deadline = new Parser().getTaskDeadline(input);
+            String taskDescription = Parser.getTaskDescriptionFromUserInput(input);
+            String deadline = Parser.getTaskDeadline(input);
             Deadline temp = new Deadline(taskDescription, deadline, idCounter);
             tasks.add(temp);
             idCounter++;

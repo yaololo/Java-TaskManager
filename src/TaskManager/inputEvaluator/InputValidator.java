@@ -6,10 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class InputValidator {
-    static final int MAX_YEAR = 4000;
-
     public static void validateTodo(String todoTask) throws InvalidInputException {
-        String description = new Parser().getTaskDescription(todoTask);
+        String description = Parser.getTaskDescriptionFromUserInput(todoTask);
         if (description.isEmpty()){
             throw new InvalidInputException("Empty description for TODO");
         }
@@ -21,7 +19,7 @@ public class InputValidator {
             throw new InvalidInputException("Missing '/' to indicate deadline");
         }
 
-        String dateOfDeadline = new Parser().getTaskDeadline(deadlineTask);
+        String dateOfDeadline = Parser.getTaskDeadline(deadlineTask);
         if(dateOfDeadline.isEmpty()){
             throw new InvalidInputException("Empty deadline for Deadline task");
         }
@@ -30,7 +28,7 @@ public class InputValidator {
             throw new InvalidInputException("Invalid date format");
         }
 
-        String taskDescription = new Parser().getTaskDescription(deadlineTask);
+        String taskDescription = Parser.getTaskDescriptionFromUserInput(deadlineTask);
         if (taskDescription.isEmpty()){
             throw new InvalidInputException("Empty description for deadline task");
         }
