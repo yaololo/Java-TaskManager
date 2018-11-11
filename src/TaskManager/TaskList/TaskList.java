@@ -47,9 +47,22 @@ public class TaskList {
         }
     }
 
-    public void markAsDone(String line){
-        int index = Integer.parseInt(line.substring("done".length()).trim());
+    public void markAsDone(String input){
+        int index = Integer.parseInt(input.substring("/".length()).trim());
         tasks.get(index - 1).setStatus(true);
+    }
+
+    public void updateTaskDescription(String userInput){
+        int index = Integer.parseInt(userInput.substring("/".length()).trim());
+        String newDescription = userInput.substring("description".length(), index).trim();
+        tasks.get(index - 1).updateDescription(newDescription);
+    }
+
+    public void updateReminderTime(String userInput){
+        int index = Integer.parseInt(userInput.substring("/".length()).trim());
+        int newReminderTime = Integer.parseInt(userInput.substring("reminder".length(), index).trim());
+        Deadline buffer = (Deadline)tasks.get(index - 1);
+        buffer.setTimeToRemindInMin(newReminderTime);
     }
 
     public int getTotalNumberOfTask(){ return tasks.size(); }
