@@ -1,4 +1,10 @@
 package taskManager.parser;
+import taskManager.exceptions.InvalidInputException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
 
 public class Parser {
 
@@ -34,5 +40,14 @@ public class Parser {
     public static String getTaskDeadline(String task){
         String dateOfDeadline = task.substring(task.indexOf("/")+1).trim();
         return dateOfDeadline;
+    }
+
+    public static Date parseToDate(String dateString){
+        try{
+            Date deadline= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dateString);
+            return deadline;
+        }catch(ParseException e){
+            return null;
+        }
     }
 }
