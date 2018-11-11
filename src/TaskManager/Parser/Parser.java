@@ -23,7 +23,7 @@ public class Parser {
                 + " / " + line.split("\\|")[3].trim();
     }
 
-    public static String getTaskDescription(String task){
+    public static String getTaskDescriptionFromUserInput(String task){
         String keyWord = getCommandWord(task);
         String description;
 
@@ -33,8 +33,11 @@ public class Parser {
         } else {
             description = task.substring("todo".length()).trim();
         }
-
         return description;
+    }
+
+    public static int getTaskReminderTime (String fileInput){
+        return Integer.parseInt(fileInput.split("\\|")[4].trim());
     }
 
     public static String getTaskDeadline(String task){
