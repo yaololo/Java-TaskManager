@@ -1,6 +1,7 @@
 package taskManager.fileManager;
 import taskManager.exceptions.InvalidInputException;
 import taskManager.taskList.TaskList;
+import taskManager.taskList.Tasks.Deadline;
 import taskManager.taskList.Tasks.Task;
 import taskManager.ui.Ui;
 import taskManager.parser.Parser;
@@ -47,11 +48,13 @@ public class FileManager {
                 int status = 0;
                 if(tasks.get(i).getStatus()) status = 1;
 
+                Deadline temp = (Deadline) tasks.get(i);
                 if(taskDetails.split("\\n").length > 2){
                     output.println("Deadline | "
                             + Integer.toString(status) + " | "
                             + tasks.get(i).getDescription().trim()
-                            + " | " + (taskDetails.split("\\n")[2]).trim());
+                            + " | " + (taskDetails.split("\\n")[2]).trim()
+                            + " | " + temp.getTimeToRemindInMin() );
                 } else{
                     output.println("Todo | "+ Integer.toString(status) + " | " + tasks.get(i).getDescription().trim());
                 }
@@ -64,29 +67,28 @@ public class FileManager {
     }
 
     private void addTask(String input, TaskList taskList){
-
         try {
-            String formattedString = new Parser().parseFileFormatToUserInput(input);
+            String formattedString = Parser.parseFileFormatToUserInput(input);
 
             if (formattedString.startsWith("D")) {
-
                 taskList.addDeadline(formattedString);
 
-            } else {
-                taskList.addTodo(formattedString);
-            }
+                int timeToRemind = Parser.getTaskReminderTime(input);
+                if(timeToRemind != 30){
+                    int size = taskList.getTaskList().size();
+                    Deadline temp = (Deadline)taskList.getTaskList().get(size - 1);
+                    temp.setTimeToRemindInMin(timeToRemind);
+                }
+
+            } else taskList.addTodo(formattedString);
 
             if (Integer.parseInt(input.split("\\|")[1].trim()) == 1) {
-
                 // @ get current task from the tasklist and set the status to true
                 taskList.getTaskList().get(taskList.getTaskList().size() -1).setStatus(true);
             }
-
         } catch (InvalidInputException e){
-
-            new Ui().printError("Something wrong during adding task to taskList: " + e.getMessage());
+            // need to thrown error
+            Ui.printError("Something wrong during adding task to taskList: " + e.getMessage());
         }
-
     }
-
 }
