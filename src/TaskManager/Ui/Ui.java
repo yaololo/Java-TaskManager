@@ -4,50 +4,51 @@ import java.util.Scanner;
 import taskManager.taskList.Tasks.Task;
 
 public class Ui {
+    public static final String RESET = "\u001B[0m";
+    public static final String BLACK = "\u001B[30m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
 
     private Scanner in;
-    private static String commands = "--print  \tto print all tasks\n" +
-                                    "--todo descriptions \tto create a new todo task with keywords todo, e.g. ‘todo attend an online course\n" +
-                                    "--deadline description / deadline \tto create a new deadline task with deadline as keyword. e.g deadline buy milk / Friday evening\n" +
-                                    "--done task number’ \tto mark which deadline tasks as done with keyword done e.g ‘done 3’\n";
+    private static String commands = "\n\nprint  \t--to print all tasks\n" +
+                                    "todo descriptions \t--to create a new todo task with keywords todo, e.g. ‘todo attend an online course\n" +
+                                    "deadline description / deadline \t--to create a new deadline task with deadline as keyword. e.g deadline buy milk / 2018-02-1\n" +
+                                    "done task number’ \t--to mark which deadline tasks as done with keyword done e.g ‘done 3’\n";
 
-    public Ui() {
-        in = new Scanner(System.in);
-    }
+    public Ui() { in = new Scanner(System.in); }
 
-    public String readUserCommand() {
-        System.out.print("Your task? ");
-        return in.nextLine().trim();
-    }
+    public String readUserCommand() { return in.nextLine().trim(); }
 
-    public static void printWelcome(){
-        System.out.println("Welcome to taskManager!\n");
-    }
+    public static void printWelcome(){ System.out.println(BLUE + "\nWelcome to taskManager!\n" + RESET); }
 
-    public static void printNumberOfTasks(int count){
-        System.out.printf("Number of task you have is %d, please enter your command: \n", count);
-    }
-
-    public static void printMessage(String msg){
-        System.out.println(msg);
+    public static void printNumberOfTasks(int count, int reminders){
+        System.out.printf(YELLOW + "You have %d of tasks that will overdue soon!\n" + RESET, reminders );
+        System.out.printf(GREEN + "Total number of task you have is %d, please enter your command: \n" +RESET, count);
     }
 
     public static void printError(String errMsg) {
-        System.out.println(errMsg);
+        System.out.println( RED +"\n" + errMsg + "\n" + RESET);
     }
 
     public static void exit() {
-        System.out.println("Bye Bye!");
+        System.out.println(PURPLE + "\nBye Bye!" + RESET);
     }
 
-    public void printTasks(List<Task> tasks){
+    public static void printALlTasks(List<Task> tasks){
         System.out.println("Tasks:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("[" + (i + 1) + "] " + tasks.get(i).getDetails().trim());
+            System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim());
         }
     }
 
-    public static void printCommands(){
-        System.out.println(commands);
+    public static void printCommands(){ System.out.println(GREEN + commands + RESET); }
+
+    public void printReminderTasks(){
+
     }
 }
