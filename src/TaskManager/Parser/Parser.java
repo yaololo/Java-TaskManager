@@ -14,13 +14,13 @@ public class Parser {
         return fullCommand.split(" ")[0].toLowerCase();
     }
 
-    public static String parseFileFormatToUserInput(String line){
-        if(line.startsWith("T")){
-            return line.split("\\|")[0].trim() + " " + line.split("\\|")[2].trim();
+    public static String parseFileFormatToUserInput(String fileInput){
+        if(fileInput.startsWith("T")){
+            return fileInput.split("\\|")[0].trim() + " " + fileInput.split("\\|")[2].trim();
         }
 
-        return line.split("\\|")[0].trim() + " " + line.split("\\|")[2].trim()
-                + " / " + line.split("\\|")[3].trim();
+        return fileInput.split("\\|")[0].trim() + " " + fileInput.split("\\|")[2].trim()
+                + " / " + fileInput.split("\\|")[3].trim();
     }
 
     public static String getTaskDescriptionFromUserInput(String task){
