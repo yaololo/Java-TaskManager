@@ -1,5 +1,6 @@
 package taskManager;
 import taskManager.exceptions.InvalidInputException;
+import taskManager.inputEvaluator.InputValidator;
 import taskManager.parser.Parser;
 import taskManager.taskList.TaskList;
 import taskManager.ui.Ui;
@@ -52,7 +53,9 @@ public class TaskManager {
                             ui.printReminderTasks(tasks.getReminderList());
                             break;
                         case "print":
-                            ui.printALlTasks(tasks.getTaskList(), userInputCommand);
+                            InputValidator.validatePrintCommand(userInputCommand);
+                            String instruction = Parser.getPrintInstruction(userInputCommand);
+                            ui.printALlTasks(tasks.getTaskList(), instruction);
                             break;
                         case "done":
                             tasks.markAsDone(userInputCommand);
@@ -62,6 +65,12 @@ public class TaskManager {
                             break;
                         case "reminder":
                             tasks.updateReminderTime(userInputCommand);
+                            break;
+                        case "delete":
+                            tasks.deleteTask(userInputCommand);
+                            break;
+                        case "clear":
+                            tasks.deleteAllTasks(userInputCommand);
                             break;
                         default:
                             ui.printError("Unknown command! please try again ");
@@ -73,7 +82,7 @@ public class TaskManager {
               }
             fileManager.saveToFile(tasks);
 
-        } catch (IOException e) {
+        } catch (InvalidInputException | IOException e) {
             ui.printError(e.getMessage());
         }
         ui.exit();
