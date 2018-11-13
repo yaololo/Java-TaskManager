@@ -90,8 +90,6 @@ public class TaskList {
             int newReminderTime =
                     Integer.parseInt(userInput.substring("reminder".length(), userInput.lastIndexOf("/")).trim());
 
-            System.out.println(userInput.substring("reminder".length(), userInput.lastIndexOf("/")).trim());
-
             Deadline buffer = (Deadline) tasks.get(index - 1);
             buffer.setTimeToRemindInMin(newReminderTime);
 
