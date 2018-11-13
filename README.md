@@ -13,31 +13,31 @@ TaskManager is a program that helps user to manage and keep track of the tasks t
   6. Now, you can type the command to interact with the program
 
 ## Commands/Functionalities
-#### Helper command: `_command-help_`
+#### Helper command: _`command-help`_
 Type `command-help` to show all available commands and functionality description for each command
 
-#### Printing statement: `_print_`
+#### Printing statement: _`print`_
 It start with keyword `print` command in the terminal to allow user to filter which kind of tasks he/she would like to view.
 
-##### `_print all_`
+##### _`print all`_
 `_print all_` will print all tasks.
 
-##### `_print todo_`
+##### _`print todo`_
 `_print todo_` will only print out todo type of tasks.
 
-##### `_print deadline_`
+##### _`print deadline`_
 `_print deadline_` will only print out deadline type of tasks.
 
-##### `_print done_`
+##### _`print done`_
 `_print done_` will only print out the tasks that has been done.
 
-##### `_print incomplete_`
+##### `_print incomplete`_
 `_print incomplete_` will only print out tasks that are not done yet.
 
-##### `_print-reminder_`
+##### _`print-reminder`_
 `_print-reminder_` will only print out tasks that are going to overdue soon.
 
-#### Add new tasks: `_todo_` or `_deadline_`
+#### Add new tasks: _`todo`_ or _`deadline`_
 TaskManager is able to keep track two type of tasks(`todo` and `deadline`).
 
 `todo` type of task is a normal task that does not require a deadline. Command to create a `todo` task starts a keyword `todo` followed by a `description`. E.g  `todo attend an online course`, this will generate a `attend an online course` todo task.
@@ -60,7 +60,7 @@ E.g `date 2018-13-05 15:30:00 / 4` it update task `Number 4` deadline to `2018-1
 TaskManager allows user to update reminder time of Deadline type of tasks, keyword `_reminder_` is used.
 E.g `reminder 40 / 4` it update task `Number 4` reminder time to `40 mins`. It will reminds the user 40 mins prior to the deadline
 
-#### Exiting the program : `exit`
+#### Exiting the program : _`exit`_
 Enter `exit` command will quit the program and a `Bye Bye` message will be shown to user to indicate the program has stopped.
 
 #### Saving the data
