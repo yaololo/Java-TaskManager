@@ -1,4 +1,5 @@
 package taskManager.parser;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +32,7 @@ public class Parser {
         return description;
     }
 
-    public static int getTaskReminderTime (String fileInput){
+    public static int  getTaskReminderTime (String fileInput){
         return Integer.parseInt(fileInput.split("\\|")[4].trim());
     }
 
@@ -46,6 +47,23 @@ public class Parser {
             return deadline;
         }catch(ParseException e){
             return null;
+        }
+    }
+
+    public static String getPrintInstruction(String userInput){
+        String instruction = userInput.substring("print".length()).trim();
+        return instruction;
+    }
+
+    public static String parseUserInputFormatToFileFormat(String taskDetails, String description, int status, Integer reminderTime){
+        if(taskDetails.split("\\n").length > 2){
+            return "Deadline | "
+                    + status + " | "
+                    + description
+                    + " | " + (taskDetails.split("\\n")[2]).trim()
+                    + " | " + reminderTime;
+        } else{
+            return "Todo | "+ status + " | " + description;
         }
     }
 }
