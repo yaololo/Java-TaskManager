@@ -8,7 +8,7 @@ public class Todo extends Task {
     }
 
     public String getDetails(){
-        return getDescription() + "\n\tIt done? " + (getStatus()? "Yes" : "No");
+        return getDescription() + "\n\tIs done? " + (getStatus()? "Yes" : "No");
     }
 
     public String getTaskType(){
