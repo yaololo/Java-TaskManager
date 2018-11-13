@@ -1,26 +1,24 @@
 package taskManager.taskList;
-import taskManager.inputEvaluator.InputValidator;
-import taskManager.exceptions.InvalidInputException;
-import taskManager.parser.Parser;
-import taskManager.taskList.Tasks.*;
-import java.util.ArrayList;
-import java.util.List;
+        import taskManager.inputEvaluator.InputValidator;
+        import taskManager.exceptions.InvalidInputException;
+        import taskManager.parser.Parser;
+        import taskManager.taskList.Tasks.*;
+        import java.util.ArrayList;
+        import java.util.List;
 
 public class TaskList {
     private List<Task> tasks;
     private List<Task> reminderList;
-    private int idCounter;
+
     public TaskList(){
         tasks = new ArrayList<>();
         reminderList = new ArrayList<>();
-        idCounter= 1;
     }
 
     public void addTodo(String input)throws InvalidInputException {
         try {
             InputValidator.validateTodo(input);
-            tasks.add(new Todo(input.substring("todo".length()).trim(), idCounter));
-            idCounter++;
+            tasks.add(new Todo(input.substring("todo".length()).trim()));
 
         } catch (InvalidInputException e) {
             throw new InvalidInputException(e.getMessage());
@@ -33,8 +31,7 @@ public class TaskList {
 
             String taskDescription = Parser.getTaskDescriptionFromUserInput(input);
             String deadline = Parser.getTaskDeadline(input);
-            Deadline buffer = new Deadline(taskDescription, deadline, idCounter);
-            idCounter++;
+            Deadline buffer = new Deadline(taskDescription, deadline);
 
             if(updateReminderTIme) buffer.setTimeToRemindInMin(newReminderTime);
 
@@ -93,15 +90,7 @@ public class TaskList {
             Deadline buffer = (Deadline) tasks.get(index - 1);
             buffer.setTimeToRemindInMin(newReminderTime);
 
-            if (buffer.getReminderStatus()) {
-                if (!reminderList.contains(tasks.get(index - 1))) {
-                    reminderList.add(tasks.get(index - 1));
-                }
-            } else {
-                if (reminderList.contains(tasks.get(index - 1))) {
-                    reminderList.remove(tasks.get(index - 1));
-                }
-            }
+            handlerAddToReminderList(buffer.getReminderStatus(), index);
         } catch (InvalidInputException  e){
             throw new InvalidInputException(e.getMessage());
         } catch (NumberFormatException e){
@@ -126,17 +115,38 @@ public class TaskList {
             Deadline buffer = (Deadline) tasks.get(index - 1);
             buffer.setDeadline(date);
 
-            if (buffer.getReminderStatus()) {
-                if (!reminderList.contains(tasks.get(index - 1))) {
-                    reminderList.add(tasks.get(index - 1));
-                }
-            } else {
-                if (reminderList.contains(tasks.get(index - 1))) {
-                    reminderList.remove(tasks.get(index - 1));
-                }
+            handlerAddToReminderList(buffer.getReminderStatus(), index);
+        }  catch (InvalidInputException  e){
+            throw new InvalidInputException(e.getMessage());
+        } catch (NumberFormatException e){
+            throw new InvalidInputException("Parse to number error: " + e.getMessage());
+        }
+    }
+
+    public void deleteTask(String userInput) throws InvalidInputException {
+        try {
+            InputValidator.validateInputFormat(userInput);
+            InputValidator.validateTaskId(userInput, tasks.size());
+
+            int index = Integer.parseInt(userInput.substring(userInput.lastIndexOf("/") + 1).trim());
+
+            tasks.remove(index -1);
+        } catch (InvalidInputException  e){
+            throw new InvalidInputException(e.getMessage());
+        } catch (NumberFormatException e){
+            throw new InvalidInputException("Parse to number error: " + e.getMessage());
+        }
+    }
+
+    public void deleteAllTasks(String userInput) throws InvalidInputException {
+        try {
+            if(userInput.split(" ").length > 1){
+                throw new InvalidInputException("Invalid input format ");
+            }else {
+                tasks.clear();
             }
 
-        }  catch (InvalidInputException  e){
+        } catch (InvalidInputException  e){
             throw new InvalidInputException(e.getMessage());
         } catch (NumberFormatException e){
             throw new InvalidInputException("Parse to number error: " + e.getMessage());
@@ -148,5 +158,17 @@ public class TaskList {
     public List<Task> getReminderList(){ return reminderList;}
 
     public int getTotalNumberOfReminderTasks(){ return reminderList.size(); }
+
+    private void handlerAddToReminderList(boolean flag, int index){
+        if(flag){
+            if (!reminderList.contains(tasks.get(index - 1))) {
+                reminderList.add(tasks.get(index - 1));
+            }
+        } else {
+            if (reminderList.contains(tasks.get(index - 1))) {
+                reminderList.remove(tasks.get(index - 1));
+            }
+        }
+    }
 
 }
