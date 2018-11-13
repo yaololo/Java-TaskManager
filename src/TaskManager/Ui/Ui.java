@@ -1,6 +1,8 @@
 package taskManager.ui;
 import java.util.List;
 import java.util.Scanner;
+
+import taskManager.inputEvaluator.InputValidator;
 import taskManager.taskList.Tasks.Task;
 
 public class Ui {
@@ -39,16 +41,37 @@ public class Ui {
         System.out.println(PURPLE + "\nBye Bye!" + RESET);
     }
 
-    public static void printALlTasks(List<Task> tasks){
-        System.out.println("Tasks:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim());
+    public static void printALlTasks(List<Task> tasks, String userInput){
+        if(!InputValidator.validatePrintCommand(userInput)){
+            printError("Invalid print command ");
+        }else{
+            System.out.println("Tasks:");
+            String instruction = userInput.substring("print".length()).trim();
+
+            for (int i = 0; i < tasks.size(); i++) {
+                boolean status =  tasks.get(i).getStatus();
+                String type = tasks.get(i).getTaskType();
+
+                if(instruction.equals("all")) {
+                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
+                } else if(instruction.equals("done") && status == true){
+                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
+                } else if(instruction.equals("incomplete") && status == false){
+                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
+                } else if(instruction.equals(type)) {
+                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
+                }
+            }
         }
     }
 
     public static void printCommands(){ System.out.println(GREEN + commands + RESET); }
 
-    public void printReminderTasks(){
-
+    public void printReminderTasks(List<Task> tasks){
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println("Tasks:");
+            System.out.println("[" + tasks.get(i).getId() + "] " + YELLOW +
+                    tasks.get(i).getDetails().trim() + "\n" + RESET );
+        }
     }
 }
