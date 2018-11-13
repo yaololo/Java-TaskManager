@@ -12,8 +12,8 @@ public class Deadline extends Task {
     private String type= "deadline";
     private long timeBeforeDeadline;
 
-    public Deadline(String task, String deadline, int id){
-      super(task, id);
+    public Deadline(String task, String deadline){
+      super(task);
         this.setStatus(false);
         setDeadline(deadline);
         timeToRemindInMin = 30;
@@ -64,7 +64,7 @@ public class Deadline extends Task {
 
     public String getTaskType(){ return type; }
 
-    public String getTimeFromNowToDeadline(){
+    private String getTimeFromNowToDeadline(){
 
         updateReminderStatus();
 

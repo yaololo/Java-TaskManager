@@ -1,18 +1,12 @@
 package  taskManager.taskList.Tasks;
-        import java.text.SimpleDateFormat;
-        import java.util.Date;
 
 public abstract class Task {
     private String description;
     private Boolean status;
-    private String createDate;
-    private int id;
 
-    public Task(String task, int id){
+    public Task(String task){
         updateDescription(task);
         status = false;
-        createDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        setId(id);
     }
 
     public void updateDescription(String task){ description = task; }
@@ -27,9 +21,4 @@ public abstract class Task {
 
     public boolean getStatus() { return this.status; }
 
-    public int getId(){ return id; }
-
-    public void setId(int taskId){ id = taskId; }
-
-    public String getCreateDate(){ return createDate; }
 }

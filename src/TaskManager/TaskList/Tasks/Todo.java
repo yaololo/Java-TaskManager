@@ -3,8 +3,8 @@ package taskManager.taskList.Tasks;
 public class Todo extends Task {
     private String type = "todo";
 
-    public Todo(String todo, int id){
-        super(todo, id);
+    public Todo(String todo){
+        super(todo);
     }
 
     public String getDetails(){
