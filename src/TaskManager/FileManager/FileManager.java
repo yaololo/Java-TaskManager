@@ -3,7 +3,6 @@ import taskManager.exceptions.InvalidInputException;
 import taskManager.taskList.TaskList;
 import taskManager.taskList.Tasks.Deadline;
 import taskManager.taskList.Tasks.Task;
-import taskManager.ui.Ui;
 import taskManager.parser.Parser;
 
 import java.io.File;
@@ -20,7 +19,7 @@ public class FileManager {
         file = new File(path);
     }
 
-    public void loadFile(TaskList taskList) throws IOException{
+    public void loadFile(TaskList taskList) throws IOException, InvalidInputException {
         try {
             Scanner input = new Scanner(file);
 
@@ -33,6 +32,8 @@ public class FileManager {
 
         }catch (FileNotFoundException e){
             throw new IOException("problem encountered while opening file: " + e.getMessage());
+        }catch (InvalidInputException e){
+            throw new InvalidInputException(e.getMessage());
         }
     }
 
@@ -47,26 +48,23 @@ public class FileManager {
 
                 int status = 0;
                 if(tasks.get(i).getStatus()) status = 1;
+                String description = tasks.get(i).getDescription().trim();
 
                 if(taskDetails.split("\\n").length > 2){
                     Deadline temp = (Deadline)tasks.get(i);
-                    output.println("Deadline | "
-                            + Integer.toString(status) + " | "
-                            + tasks.get(i).getDescription().trim()
-                            + " | " + (taskDetails.split("\\n")[2]).trim()
-                            + " | " + temp.getTimeToRemindInMin() );
+                    output.println(Parser.parseUserInputFormatToFileFormat(taskDetails, description, status, temp.getTimeToRemindInMin()));
                 } else{
-                    output.println("Todo | "+ Integer.toString(status) + " | " + tasks.get(i).getDescription().trim());
+                    output.println(Parser.parseUserInputFormatToFileFormat(taskDetails, description, status, null));
                 }
             }
             output.close();
 
         }catch (IOException e){
-            throw new IOException("problem encountered while writing data to file: " + e.getMessage());
+            throw new IOException("problem encountered while writing sampleData to file: " + e.getMessage());
         }
     }
 
-    private void addTask(String input, TaskList taskList){
+    private void addTask(String input, TaskList taskList) throws InvalidInputException {
         try {
             String formattedString = Parser.parseFileFormatToUserInput(input);
 
@@ -86,8 +84,7 @@ public class FileManager {
                 taskList.getTaskList().get(taskList.getTaskList().size() -1).setStatus(true);
             }
         } catch (InvalidInputException e){
-            // need to thrown error
-            Ui.printError("Something wrong during adding task to taskList: " + e.getMessage());
+            throw new InvalidInputException( "Something wrong during adding task to taskList: " + e.getMessage());
         }
     }
 }
