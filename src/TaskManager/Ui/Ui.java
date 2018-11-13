@@ -7,14 +7,11 @@ import taskManager.taskList.Tasks.Task;
 
 public class Ui {
     public static final String RESET = "\u001B[0m";
-    public static final String BLACK = "\u001B[30m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
     public static final String BLUE = "\u001B[34m";
     public static final String PURPLE = "\u001B[35m";
-    public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\u001B[37m";
 
     private Scanner in;
     private static String commands = "\n\nprint all  \t--to print all tasks\n\n" +
@@ -29,8 +26,9 @@ public class Ui {
             "description new description / task number’ \t--update each individual task description with keyword 'description' e.g ‘description random description / 4’\n\n" +
             "date  new date and time / task number’ \t--update Deadline type of tasks deadline with keyword 'date' e.g ‘date 2018-13-05 15:30:00 / 4’\n\n" +
             "reminder new time / task number’ \t--update reminder time of Deadline type of tasks keyword 'reminder' e.g ‘reminder 40 / 4’\n\n" +
-            "exit \t-- to exit the program\n";
-
+            "exit \t-- to exit the program\n" +
+            "done / task number’ \t--delete specific task keyword delete e.g ‘delete / 3’\n\n" +
+            "clear \t--delete all tasks \n\n";
 
     public Ui() { in = new Scanner(System.in); }
 
@@ -51,26 +49,21 @@ public class Ui {
         System.out.println(PURPLE + "\nBye Bye!" + RESET);
     }
 
-    public static void printALlTasks(List<Task> tasks, String userInput){
-        if(!InputValidator.validatePrintCommand(userInput)){
-            printError("Invalid print command ");
-        }else{
-            System.out.println("Tasks:");
-            String instruction = userInput.substring("print".length()).trim();
+    public static void printALlTasks(List<Task> tasks, String instruction){
+        System.out.println("Tasks:");
 
-            for (int i = 0; i < tasks.size(); i++) {
-                boolean status =  tasks.get(i).getStatus();
-                String type = tasks.get(i).getTaskType();
+        for (int i = 0; i < tasks.size(); i++) {
+            boolean status =  tasks.get(i).getStatus();
+            String type = tasks.get(i).getTaskType();
 
-                if(instruction.equals("all")) {
-                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
-                } else if(instruction.equals("done") && status == true){
-                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
-                } else if(instruction.equals("incomplete") && status == false){
-                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
-                } else if(instruction.equals(type)) {
-                    System.out.println("[" + tasks.get(i).getId() + "] " + tasks.get(i).getDetails().trim() + "\n");
-                }
+            if(instruction.equals("all")) {
+                System.out.println("[" + (i+1) + "] " + tasks.get(i).getDetails().trim() + "\n");
+            } else if(instruction.equals("done") && status == true){
+                System.out.println("[" + (i+1) + "] " + tasks.get(i).getDetails().trim() + "\n");
+            } else if(instruction.equals("incomplete") && status == false){
+                System.out.println("[" + (i+1) + "] " + tasks.get(i).getDetails().trim() + "\n");
+            } else if(instruction.equals(type)) {
+                System.out.println("[" + (i+1) + "] " + tasks.get(i).getDetails().trim() + "\n");
             }
         }
     }
@@ -80,7 +73,7 @@ public class Ui {
     public void printReminderTasks(List<Task> tasks){
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println("Tasks:");
-            System.out.println("[" + tasks.get(i).getId() + "] " + YELLOW +
+            System.out.println("[" + (i+1) + "] " + YELLOW +
                     tasks.get(i).getDetails().trim() + "\n" + RESET );
         }
     }
