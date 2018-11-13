@@ -34,7 +34,7 @@ public class Deadline extends Task {
     public String getDeadline() { return deadline; }
 
     public String getDetails(){
-        return getDescription() + "\n\tIt done? " + (getStatus()? "Yes" : "No") + "\n\t" + getDeadline() + "\n\t"
+        return getDescription() + "\n\tIs done? " + (getStatus()? "Yes" : "No") + "\n\t" + getDeadline() + "\n\t"
                 + (idOverDue? "" : getTimeFromNowToDeadline() + "until deadline\n\t") + "Current setting for reminder is "
                 + timeToRemindInMin + " minutes before deadline";
     }
@@ -65,7 +65,10 @@ public class Deadline extends Task {
     public String getTaskType(){ return type; }
 
     public String getTimeFromNowToDeadline(){
-        //assert timebeforedeadlin is not negative
+
+        updateReminderStatus();
+
+        //assert timeBeforeDeadline is not negative
         long diffInMinutes = timeBeforeDeadline;
 
         int years = (int)(diffInMinutes / 525600);
@@ -87,6 +90,5 @@ public class Deadline extends Task {
         else hour = String.valueOf(hours) + " hour(s) ";
 
         return year + day + hour + diffInMinutes + " minutes ";
-
     }
 }
