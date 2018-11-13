@@ -1,9 +1,10 @@
 Todo | 1 | read book
-Deadline | 0 | return book | June 6th
+Deadline | 0 | return book | 2020-11-10 12:00:00 | 30
 Todo | 1 | join sports club
 Todo | 1 | submit report
-Deadline | 0 | feed my dog | today 6pm
+Deadline | 0 | feed my dog | 2020-05-12 12:22:00 | 40
 Todo | 0 | meet client
-Deadline | 0 | buy food | Friday evening
+Deadline | 0 | buy food | 2018-10-02 23:11:00 | 50
 Todo | 0 | submit homework
-Deadline | 0 | buy milk | tomorrow eveing
+Deadline | 0 | buy milk | 2018-11-20 22:33:00 | 30
+Deadline | 0 | new deadline task | 2018-11-13 15:00:00 | 30
