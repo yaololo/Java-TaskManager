@@ -30,30 +30,38 @@ public class TaskManager {
                     ui.printNumberOfTasks(tasks.getTotalNumberOfTask(), tasks.getTotalNumberOfReminderTasks());
 
                     String userInputCommand = ui.readUserCommand();
-                    String commandKeyWord = new Parser().getCommandWord(userInputCommand);
+                    String commandKeyWord = Parser.getCommandWord(userInputCommand);
 
                     switch (commandKeyWord) {
                         case "exit":
-                        case "":
                             isExit = true;
                             break;
                         case "command-help":
                             ui.printCommands();
                             break;
-                        case "date":
-//                        new InputEvaluator().deadlineDateEvluation(userInputCommand);
-                            break;
                         case "todo":
                             tasks.addTodo(userInputCommand);
                             break;
                         case "deadline":
-                            tasks.addDeadline(userInputCommand);
+                            tasks.addDeadline(userInputCommand, null, false);
+                            break;
+                        case "date":
+                            tasks.updateDeadlineTime(userInputCommand);
+                            break;
+                        case "print-reminder":
+                            ui.printReminderTasks(tasks.getReminderList());
                             break;
                         case "print":
-                            ui.printALlTasks(tasks.getTaskList());
+                            ui.printALlTasks(tasks.getTaskList(), userInputCommand);
                             break;
                         case "done":
                             tasks.markAsDone(userInputCommand);
+                            break;
+                        case "description":
+                            tasks.updateTaskDescription(userInputCommand);
+                            break;
+                        case "reminder":
+                            tasks.updateReminderTime(userInputCommand);
                             break;
                         default:
                             ui.printError("Unknown command! please try again ");
