@@ -17,10 +17,20 @@ public class Ui {
     public static final String WHITE = "\u001B[37m";
 
     private Scanner in;
-    private static String commands = "\n\nprint  \t--to print all tasks\n" +
-                                    "todo descriptions \t--to create a new todo task with keywords todo, e.g. ‘todo attend an online course\n" +
-                                    "deadline description / deadline \t--to create a new deadline task with deadline as keyword. e.g deadline buy milk / 2018-02-1\n" +
-                                    "done task number’ \t--to mark which deadline tasks as done with keyword done e.g ‘done 3’\n";
+    private static String commands = "\n\nprint all  \t--to print all tasks\n\n" +
+            "print todo  \t--will only print out todo type of tasks\n\n"+
+            "print deadline  \t--will only print out deadline type of tasks\n\n"+
+            "print done  \t--will only print out the tasks that are done\n\n"+
+            "print incomplete  \t--will only print out tasks that are not done yet\n\n"+
+            "print-reminder  \t--will only print out tasks that are going to overdue soon\n\n"+
+            "todo descriptions \t--to create a new todo task with keywords todo, e.g. ‘todo attend an online course'\n\n" +
+            "deadline description / deadline \t--to create a new deadline task with deadline as keyword. e.g deadline buy milk / 2018-02-1\n\n" +
+            "done / task number’ \t--to mark which deadline tasks as done with keyword done e.g ‘done / 3’\n\n" +
+            "description new description / task number’ \t--update each individual task description with keyword 'description' e.g ‘description random description / 4’\n\n" +
+            "date  new date and time / task number’ \t--update Deadline type of tasks deadline with keyword 'date' e.g ‘date 2018-13-05 15:30:00 / 4’\n\n" +
+            "reminder new time / task number’ \t--update reminder time of Deadline type of tasks keyword 'reminder' e.g ‘reminder 40 / 4’\n\n" +
+            "exit \t-- to exit the program\n";
+
 
     public Ui() { in = new Scanner(System.in); }
 
