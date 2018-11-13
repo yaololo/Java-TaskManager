@@ -13,17 +13,15 @@ public class Deadline extends Task {
     private long timeBeforeDeadline;
 
     public Deadline(String task, String deadline, int id){
-        super(task, id);
+      super(task, id);
         this.setStatus(false);
         setDeadline(deadline);
         timeToRemindInMin = 30;
-        updateReminderStatus();
-        reminderStatus= false;
-
     }
 
     public void setDeadline(String deadline){
         this.deadline = deadline;
+        updateReminderStatus();
     }
 
     public void setTimeToRemindInMin(int newTime){
@@ -31,41 +29,42 @@ public class Deadline extends Task {
         updateReminderStatus();
     }
 
+    public int getTimeToRemindInMin(){ return timeToRemindInMin; }
+
     public String getDeadline() { return deadline; }
 
     public String getDetails(){
         return getDescription() + "\n\tIt done? " + (getStatus()? "Yes" : "No") + "\n\t" + getDeadline() + "\n\t"
-                + (idOverDue? "" : getDurationBeforeDeadline() + "until deadline\n\t") + "Current setting for reminder is "
-                + timeToRemindInMin + " minutes before deadline)";
+                + (idOverDue? "" : getTimeFromNowToDeadline() + "until deadline\n\t") + "Current setting for reminder is "
+                + timeToRemindInMin + " minutes before deadline";
     }
 
     private void updateReminderStatus(){
-        Date dueDate = new Parser().parseToDate(deadline);
+        Date dueDate = Parser.parseToDate(deadline);
         //assert
         Date now = new Date();
         long diffInMilisecond = dueDate.getTime() - now.getTime();
 
         if(diffInMilisecond <= 0){
-            System.out.println(diffInMilisecond);
             idOverDue = true;
             reminderStatus = false;
         } else{
             idOverDue = false;
             long diffInMinute = TimeUnit.MILLISECONDS.toMinutes(diffInMilisecond);
             timeBeforeDeadline = diffInMinute;
-
-            if(diffInMinute < timeToRemindInMin){
+            if(diffInMinute <= timeToRemindInMin){
                 reminderStatus = true;
+             }else {
+                reminderStatus = false;
             }
-            reminderStatus = false;
         }
     }
 
-    public boolean getReminderStatus(){ return reminderStatus; }
+    public boolean getReminderStatus(){ return this.reminderStatus; }
 
     public String getTaskType(){ return type; }
 
-    public String getDurationBeforeDeadline(){
+    public String getTimeFromNowToDeadline(){
         //assert timebeforedeadlin is not negative
         long diffInMinutes = timeBeforeDeadline;
 
