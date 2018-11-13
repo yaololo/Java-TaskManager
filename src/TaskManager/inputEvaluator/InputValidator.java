@@ -85,16 +85,15 @@ public class InputValidator {
         if(index > upperBound || index <= 0) throw new InvalidInputException("Invalid task index");
     }
 
-
-    public static boolean validatePrintCommand(String userInput){
+    public static void validatePrintCommand(String userInput) throws InvalidInputException{
         String instruction = userInput.substring("print".length()).trim();
 
         if(instruction.equals("deadline") || instruction.equals("todo") ||
                 instruction.equals("all") || instruction.equals("done") ||
                 instruction.equals("incomplete")){
-            return true;
+
         }else{
-            return false;
+            throw new InvalidInputException("Invalid input format");
         }
     }
 }
