@@ -48,8 +48,8 @@ public class FileManager {
                 int status = 0;
                 if(tasks.get(i).getStatus()) status = 1;
 
-                Deadline temp = (Deadline) tasks.get(i);
                 if(taskDetails.split("\\n").length > 2){
+                    Deadline temp = (Deadline)tasks.get(i);
                     output.println("Deadline | "
                             + Integer.toString(status) + " | "
                             + tasks.get(i).getDescription().trim()
@@ -71,13 +71,12 @@ public class FileManager {
             String formattedString = Parser.parseFileFormatToUserInput(input);
 
             if (formattedString.startsWith("D")) {
-                taskList.addDeadline(formattedString);
-
                 int timeToRemind = Parser.getTaskReminderTime(input);
+                //assert timeToRemind is positive
                 if(timeToRemind != 30){
-                    int size = taskList.getTaskList().size();
-                    Deadline temp = (Deadline)taskList.getTaskList().get(size - 1);
-                    temp.setTimeToRemindInMin(timeToRemind);
+                    taskList.addDeadline(formattedString, timeToRemind, true);
+                } else{
+                    taskList.addDeadline(formattedString, null, false);
                 }
 
             } else taskList.addTodo(formattedString);
