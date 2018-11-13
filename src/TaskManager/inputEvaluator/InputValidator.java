@@ -58,4 +58,43 @@ public class InputValidator {
 
         return false;
     }
+
+    public static void validateInputFormat(String userInput)throws InvalidInputException {
+
+        if (!userInput.contains("/")) throw new InvalidInputException("Empty task number");
+
+        if(userInput.startsWith("description")){
+            if(userInput.substring("description".length(), userInput.lastIndexOf("/")).trim() == "" )
+                throw new InvalidInputException("Invalid input format or description is empty");
+
+        } else if(userInput.startsWith("reminder")){
+            if(userInput.substring("reminder".length(), userInput.lastIndexOf("/")).trim() == "" )
+                throw new InvalidInputException("Invalid input format or time value is empty");
+
+        }else if(userInput.startsWith("date")){
+            if(userInput.substring("date".length(), userInput.lastIndexOf("/")).trim() == "" ){
+                throw new InvalidInputException("Invalid input format or time value is empty");
+            }
+
+        } else if(userInput.split("/")[0].split(" ").length > 1)
+            throw new InvalidInputException("Invalid input format");
+    }
+
+    public static void validateTaskId(String input, int upperBound) throws InvalidInputException {
+        int index = Integer.parseInt(input.substring(input.indexOf("/") + 1).trim());
+        if(index > upperBound || index <= 0) throw new InvalidInputException("Invalid task index");
+    }
+
+
+    public static boolean validatePrintCommand(String userInput){
+        String instruction = userInput.substring("print".length()).trim();
+
+        if(instruction.equals("deadline") || instruction.equals("todo") ||
+                instruction.equals("all") || instruction.equals("done") ||
+                instruction.equals("incomplete")){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
