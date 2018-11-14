@@ -75,3 +75,9 @@ Enter `exit` command will quit the program and a `Bye Bye` message will be shown
 
 #### Saving the data
 All user input tasks will be saved in a text file on local disk automatically after the user quite the program. Next time when user run the program again, it will load the file to retrieve all the tasks.
+
+## Latest Update
+- _`Assertion`_ is used in Parser, Deadline, FileManager classes to kill the program when unexpected scenario happens.
+- jUnit is added in the project to. Unit tests is created in the project under test folder. User can right click on it and run all test to check the test result.
+- Jar file is created under out/artifacts/TaskManager_jar
+
