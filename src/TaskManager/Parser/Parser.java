@@ -33,6 +33,10 @@ public class Parser {
     }
 
     public static int  getTaskReminderTime (String fileInput){
+        // assume parse to integer won't generate negative number due to previous process
+        // which guaranteed there will not be negative for reminder time
+        assert Integer.parseInt(fileInput.split("\\|")[4].trim()) >= 0 : "Something wrong: reminder time can not be negative";
+
         return Integer.parseInt(fileInput.split("\\|")[4].trim());
     }
 

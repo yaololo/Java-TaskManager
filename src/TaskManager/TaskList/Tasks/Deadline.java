@@ -41,7 +41,11 @@ public class Deadline extends Task {
 
     private void updateReminderStatus(){
         Date dueDate = Parser.parseToDate(deadline);
-        //assert
+
+        // assume parseToDate will never return null as there is previous validation
+        // to ensure deadline in correct date format
+        assert dueDate != null : "due date is null, something wrong";
+
         Date now = new Date();
         long diffInMilisecond = dueDate.getTime() - now.getTime();
 
@@ -68,17 +72,19 @@ public class Deadline extends Task {
 
         updateReminderStatus();
 
-        //assert timeBeforeDeadline is not negative
+        // assume timeBeforeDeadline can never be negative as it is never assigned to negative value
+        assert timeBeforeDeadline >= 0 : "Something wrong, timeBeforeDeadline should not be negative";
+
         long diffInMinutes = timeBeforeDeadline;
 
         int years = (int)(diffInMinutes / 525600);
         diffInMinutes %= 525600;
-        long days = (long) (diffInMinutes / 60 / 24);
+        long days = (diffInMinutes / 60 / 24);
         diffInMinutes %= 1440;
-        long hours = (long) (diffInMinutes/ 60);
+        long hours = (diffInMinutes/ 60);
         diffInMinutes %= 60;
 
-        String year, day, hour, min;
+        String year, day, hour;
 
         if(years == 0) year = "";
         else year = String.valueOf(years) + " year(s) ";

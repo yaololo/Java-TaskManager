@@ -70,7 +70,10 @@ public class FileManager {
 
             if (formattedString.startsWith("D")) {
                 int timeToRemind = Parser.getTaskReminderTime(input);
-                //assert timeToRemind is positive
+
+                // assume timeToRemind is positive due previous checking steps
+                assert timeToRemind >= 0 : "Reminder time can not be negative";
+
                 if(timeToRemind != 30){
                     taskList.addDeadline(formattedString, timeToRemind, true);
                 } else{
