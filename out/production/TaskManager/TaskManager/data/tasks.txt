@@ -7,3 +7,5 @@ Deadline | 0 | buy food | 2018-11-14 04:00:00 | 10
 Todo | 0 | submit homework
 Deadline | 0 | buy milk | 2018-11-20 22:33:00 | 30
 Deadline | 0 | update descriontion | 2019-11-11 23:00:00 | 50
+Todo | 0 | new todo task
+Deadline | 0 | trying out a new task | 2018-12-12 00:00:00 | 30

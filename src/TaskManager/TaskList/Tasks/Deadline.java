@@ -15,8 +15,8 @@ public class Deadline extends Task {
     public Deadline(String task, String deadline){
       super(task);
         this.setStatus(false);
-        setDeadline(deadline);
         timeToRemindInMin = 30;
+        setDeadline(deadline);
     }
 
     public void setDeadline(String deadline){
@@ -55,6 +55,7 @@ public class Deadline extends Task {
         } else{
             idOverDue = false;
             long diffInMinute = TimeUnit.MILLISECONDS.toMinutes(diffInMilisecond);
+
             timeBeforeDeadline = diffInMinute;
             if(diffInMinute <= timeToRemindInMin){
                 reminderStatus = true;

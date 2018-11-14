@@ -79,5 +79,4 @@ All user input tasks will be saved in a text file on local disk automatically af
 ## Latest Update
 - _`Assertion`_ is used in Parser, Deadline, FileManager classes to kill the program when unexpected scenario happens.
 - jUnit is added in the project to. Unit tests is created in the project under test folder. User can right click on it and run all test to check the test result.
-- Jar file is created under out/artifacts/TaskManager_jar
 
